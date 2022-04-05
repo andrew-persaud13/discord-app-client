@@ -1,58 +1,36 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from 'react-router-dom';
 
-function App() {
+import './App.css';
+import LoginPage from './authPages/LoginPage/LoginPage';
+import RegisterPage from './authPages/RegisterPage/RegisterPage';
+import Dashboard from './Dashboard/Dashboard';
+import AlertNotification from './shared/components/AlertNotification';
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route exact path='/login'>
+          <LoginPage />
+        </Route>
+        <Route exact path='/register'>
+          <RegisterPage />
+        </Route>
+        <Route eact path='/dashboard'>
+          <Dashboard />
+        </Route>
+        <Route path='/'>
+          <Redirect to='/dashboard' />
+        </Route>
+      </Switch>
+      <AlertNotification message='Weep it' />
+    </Router>
   );
-}
+};
 
 export default App;
