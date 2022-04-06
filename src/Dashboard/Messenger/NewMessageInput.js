@@ -1,0 +1,60 @@
+import React, { useState } from 'react';
+import { styled } from '@mui/system';
+import { connect } from 'react-redux';
+import { sendDirectMessage } from '../../realtimeCommunication/socketConnection';
+
+const MainContainer = styled('div')({
+  height: '60px',
+  width: '100%',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+});
+
+const Input = styled('input')({
+  backgroundColor: '#2f3136',
+  width: '98%',
+  height: '44px',
+  color: 'white',
+  border: 'none',
+  borderRadius: '8px',
+  fontSize: '14px',
+  padding: '0 10px',
+});
+
+const NewMessageInput = ({ chosenChatDetails }) => {
+  const [message, setMessage] = useState('');
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSendMessage();
+    }
+  };
+
+  const handleSendMessage = () => {
+    if (message.trim().length > 0) {
+      sendDirectMessage({
+        receiverUserId: chosenChatDetails.id,
+        content: message,
+      });
+      setMessage('');
+    }
+  };
+
+  return (
+    <MainContainer>
+      <Input
+        placeholder='Enter message...'
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={handleKeyPress}
+      />
+    </MainContainer>
+  );
+};
+
+const mapStateToProps = ({ chat }) => ({
+  ...chat,
+});
+
+export default connect(mapStateToProps)(NewMessageInput);

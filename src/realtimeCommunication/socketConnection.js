@@ -15,7 +15,6 @@ Listen for events from the server here and dispatch the data
 */
 
 export const connectWithSocketServer = (userDetails) => {
-  console.log('here');
   socket = io('http://localhost:3001', {
     auth: {
       token: userDetails.token,
@@ -25,8 +24,6 @@ export const connectWithSocketServer = (userDetails) => {
   socket.on('connect', () => {
     console.log('Successfully connected with socketio server');
     console.log(socket.id);
-
-    //dispatch stuff
   });
 
   socket.on('friends-invitations', (data) => {
@@ -43,4 +40,17 @@ export const connectWithSocketServer = (userDetails) => {
     const { onlineUsers } = data;
     store.dispatch(setOnlineUsers(onlineUsers));
   });
+
+  socket.on('direct-chat-history', (data) => {
+    console.log('Direct chat historuy');
+    console.log(data);
+  });
+};
+
+export const sendDirectMessage = (data) => {
+  socket.emit('direct-message', data);
+};
+
+export const getDirectChatHistory = (data) => {
+  socket.emit('direct-chat-history', data);
 };
