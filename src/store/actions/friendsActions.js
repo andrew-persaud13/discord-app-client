@@ -19,6 +19,16 @@ export const setPendingFriendsInvitations = (pendingFriendsInvitations) => ({
   pendingFriendsInvitations,
 });
 
+export const setFriends = (friends) => ({
+  type: friendsActions.SET_FRIENDS,
+  friends,
+});
+
+export const setOnlineUsers = (onlineUsers) => ({
+  type: friendsActions.SET_ONLINE_FRIENDS,
+  onlineUsers,
+});
+
 export const sendFriendInvitation =
   (data, closeDialogHandler) => async (dispatch) => {
     const response = await api.sendFriendInvitation(data);
